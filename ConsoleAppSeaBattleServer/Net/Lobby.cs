@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ConsoleAppSeaBattleServer.Utils;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -23,6 +24,8 @@ namespace ConsoleAppSeaBattleServer.Net
         {
             _serverSocket.Bind(_ipEndPoint);
             _serverSocket.Listen(10);
+
+            LogUtils.Log("SERVER STARTED");
         }
 
         public void AwaitTwoClients()
@@ -30,7 +33,10 @@ namespace ConsoleAppSeaBattleServer.Net
             while (true)
             {
                 Socket _clientSocket1 = _serverSocket.Accept();
+                LogUtils.Log($"CLIENT 1 ACCEPT FROM {_clientSocket1.RemoteEndPoint}");
+
                 Socket _clientSocket2 = _serverSocket.Accept();
+                LogUtils.Log($"CLIENT 2 ACCEPT FROM {_clientSocket2.RemoteEndPoint}");
 
                 Task.Run(() =>
                 {

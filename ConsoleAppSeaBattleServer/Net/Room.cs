@@ -1,7 +1,7 @@
 ﻿using ConsoleAppSeaBattleServer.Game;
 using ConsoleAppSeaBattleServer.Gameplay;
 using ConsoleAppSeaBattleServer.NetProtocol;
-using ConsoleAppSeaBattleServer.NetUtils;
+using ConsoleAppSeaBattleServer.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,13 +33,28 @@ namespace ConsoleAppSeaBattleServer.Net
         {
             while (true)
             {
+                //-----
+                //client1
+
                 Request request1 = ReceiveRequest(_clientSocket1);
+                LogUtils.Log($"MESSAGE FROM CLIENT 1 RECEIVED: {request1}");
+
                 Response response1 = _gameProcess1.ProcessRequest(request1);
+
                 SendResponse(_clientSocket1, response1);
+                LogUtils.Log($"MESSAGE TO CLIENT 1 SENT: {response1}");
+
+                //-----
+                //client2
 
                 Request request2 = ReceiveRequest(_clientSocket2);
+                LogUtils.Log($"MESSAGE FROM CLIENT 2 RECEIVED: {request2}");
+
                 Response response2 = _gameProcess2.ProcessRequest(request2);
+
                 SendResponse(_clientSocket2, response2);
+                LogUtils.Log($"MESSAGE TO CLIENT 2 SENT: {response2}");
+
             }
         }
 

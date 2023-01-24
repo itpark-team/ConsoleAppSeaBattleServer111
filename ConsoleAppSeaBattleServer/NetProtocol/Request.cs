@@ -10,5 +10,10 @@ namespace ConsoleAppSeaBattleServer.NetProtocol
     {
         public string Command { get; set; }
         public string JsonData { get; set; }
+
+        public override string ToString()
+        {
+            return $"Command:{Command} JsonData:{JsonData}";
+        }
     }
 }

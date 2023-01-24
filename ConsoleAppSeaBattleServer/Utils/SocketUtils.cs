@@ -5,7 +5,7 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ConsoleAppSeaBattleServer.NetUtils
+namespace ConsoleAppSeaBattleServer.Utils
 {
     internal class SocketUtils
     {
