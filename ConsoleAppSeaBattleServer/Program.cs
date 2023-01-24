@@ -1,2 +1,5 @@
-﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
+﻿using ConsoleAppSeaBattleServer.Net;
+
+Lobby lobby = new Lobby("127.0.0.1", 34536);
+lobby.StartLobby();
+lobby.AwaitTwoClients();

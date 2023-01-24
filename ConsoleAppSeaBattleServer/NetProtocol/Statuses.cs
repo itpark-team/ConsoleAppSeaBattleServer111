@@ -8,8 +8,7 @@ namespace ConsoleAppSeaBattleServer.NetProtocol
 {
     internal class Statuses
     {
-        public static int ShowFields { get; } = 200;
-        //public static int UnknownCommand { get; } = 400;
-        //public static int ServerError { get; } = 500;
+        public static int Ok { get; } = 200;
+        public static int Error { get; } = 500;
     }
 }

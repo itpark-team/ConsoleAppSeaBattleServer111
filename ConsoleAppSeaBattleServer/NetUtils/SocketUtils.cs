@@ -15,7 +15,7 @@ namespace ConsoleAppSeaBattleServer.NetUtils
             clientSocket.Send(outputBytes);
         }
 
-        public string ReceiveMessage(Socket clientSocket)
+        public static string ReceiveMessage(Socket clientSocket)
         {
             StringBuilder messageBuilder = new StringBuilder();
             do
