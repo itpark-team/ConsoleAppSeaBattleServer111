@@ -82,19 +82,22 @@ namespace ConsoleAppSeaBattleServer.Game
             return countAliveShips > 0;
         }
 
-        private char[,] ConvertFieldToCharArray(Cell[,] field)
+        private char[] ConvertFieldToCharArray(Cell[,] field)
         {
-            char[,] charField = new char[Rows, Columns];
+            char[] charField = new char[Rows * Columns];
 
             for (int i = 0; i < Rows; i++)
             {
                 for (int j = 0; j < Columns; j++)
                 {
-                    charField[i, j] = (char)field[i, j];
+                    int index = i * Columns + j;
+                    charField[index] = (char)field[i, j];
                 }
             }
 
             return charField;
+
+           
         }
 
         public PlayerFields GetPlayerFields()
