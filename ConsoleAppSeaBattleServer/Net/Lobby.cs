@@ -61,19 +61,14 @@ namespace ConsoleAppSeaBattleServer.Net
                 messageToClient1 = JsonSerializer.Serialize(new Response()
                 {
                     Status = Statuses.Ok,
-                    JsonData = "1"
                 });
                 SocketUtils.SendMessage(_clientSocket1, messageToClient1);
 
                 messageToClient2 = JsonSerializer.Serialize(new Response()
                 {
                     Status = Statuses.Ok,
-                    JsonData = "1"
-
                 });
                 SocketUtils.SendMessage(_clientSocket2, messageToClient2);
-
-                Thread.Sleep(1000);
 
                 Task.Run(() =>
                 {

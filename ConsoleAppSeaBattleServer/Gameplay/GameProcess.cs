@@ -11,22 +11,34 @@ namespace ConsoleAppSeaBattleServer.Gameplay
 {
     internal class GameProcess
     {
-        private FieldsManager _clientFields;
+        private FieldsManager _myFields;
+        private GameProcess _enemyGameProccess;
 
         private Dictionary<string, Func<string, Response>> _methods;
 
         public GameProcess()
         {
-            _clientFields = new FieldsManager();
+            _myFields = new FieldsManager();
 
-            _clientFields.ClearFields();
-            _clientFields.RandomShipsOnMyField();
+            _myFields.ClearFields();
+            _myFields.RandomShipsOnMyField();
 
 
             _methods = new Dictionary<string, Func<string, Response>>();
             _methods.Add(Commands.GetFields, GetFields);
+            _methods.Add(Commands.Shoot, Shoot);
+
         }
 
+        public void SetEnemyGameProccess(GameProcess enemyGameProccess)
+        {
+            _enemyGameProccess = enemyGameProccess;
+        }
+
+        public FieldsManager GetFieldsManager()
+        {
+            return _myFields;
+        }
 
         public Response ProcessRequest(Request request)
         {
@@ -37,13 +49,39 @@ namespace ConsoleAppSeaBattleServer.Gameplay
 
         private Response GetFields(string intputJsonData)
         {
-            PlayerFields playerFields = _clientFields.GetPlayerFields();
+            PlayerFields playerFields = _myFields.GetPlayerFields();
             string outputJsonData = JsonSerializer.Serialize(playerFields);
 
             return new Response() { 
                 Status = Statuses.Ok,
                 JsonData = outputJsonData
             };
+        }
+
+        private Response Shoot(string intputJsonData)
+        {
+            ShootCoords shootCoords = JsonSerializer.Deserialize<ShootCoords>(intputJsonData);
+
+            try
+            {
+               Cell resultCell = _enemyGameProccess.GetFieldsManager().TakeDamageOnMyField(shootCoords.I, shootCoords.J);
+
+                _myFields.MarkShootOnShootField(shootCoords.I, shootCoords.J, resultCell);
+
+                return new Response()
+                {
+                    Status = Statuses.Ok
+                };
+            }
+            catch (Exception ex)
+            {
+                return new Response()
+                {
+                    Status = Statuses.Error,
+                    JsonData = ex.ToString()
+                };
+            }
+
         }
     }
 }

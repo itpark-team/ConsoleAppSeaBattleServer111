@@ -10,5 +10,6 @@ namespace ConsoleAppSeaBattleServer.NetProtocol
     internal class Commands
     {
         public static string GetFields { get; } = "GetFields";
+        public static string Shoot { get; } = "Shoot";
     }
 }
