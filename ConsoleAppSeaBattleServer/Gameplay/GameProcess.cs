@@ -1,4 +1,4 @@
-﻿using ConsoleAppSeaBattleServer.Game;
+﻿using ConsoleAppSeaBattleServer.NetModel;
 using ConsoleAppSeaBattleServer.NetProtocol;
 using System;
 using System.Collections.Generic;
@@ -12,13 +12,13 @@ namespace ConsoleAppSeaBattleServer.Gameplay
     internal class GameProcess
     {
         private FieldsManager _myFields;
-        private GameProcess _enemyGameProccess;
-        private GameResult _gameResult;
-
-        private Dictionary<string, Func<string, Response>> _methods;
-
         private int _playerNumber;
 
+        private GameResult _gameResult;
+        private GameProcess _enemyGameProccess;
+
+        private Dictionary<string, Func<string, Response>> _methods;
+        
         public GameProcess(int playerNumber)
         {
             _playerNumber = playerNumber;
@@ -28,12 +28,17 @@ namespace ConsoleAppSeaBattleServer.Gameplay
             _myFields.ClearFields();
             _myFields.RandomShipsOnMyField();
 
-
             _methods = new Dictionary<string, Func<string, Response>>();
             _methods.Add(Commands.GetFields, GetFields);
             _methods.Add(Commands.Shoot, Shoot);
             _methods.Add(Commands.GetGameResult, GetGameResult);
+        }
 
+        public Response ProcessRequest(Request request)
+        {
+            var method = _methods[request.Command];
+
+            return method.Invoke(request.JsonData);
         }
 
         public void SetEnemyGameProccess(GameProcess enemyGameProccess)
@@ -49,13 +54,6 @@ namespace ConsoleAppSeaBattleServer.Gameplay
         public FieldsManager GetFieldsManager()
         {
             return _myFields;
-        }
-
-        public Response ProcessRequest(Request request)
-        {
-            var method = _methods[request.Command];
-
-            return method.Invoke(request.JsonData);
         }
 
         private Response GetFields(string intputJsonData)
@@ -93,8 +91,7 @@ namespace ConsoleAppSeaBattleServer.Gameplay
                             _gameResult.CurrentGameResult = GameResult.Turn2;
                         }
                     }
-
-                    if (resultCell == Cell.Miss)
+                    else if (resultCell == Cell.Miss)
                     {
                         if (_playerNumber == 1)
                         {

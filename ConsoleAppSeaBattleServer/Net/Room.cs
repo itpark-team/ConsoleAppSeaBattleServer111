@@ -1,4 +1,4 @@
-﻿using ConsoleAppSeaBattleServer.Game;
+﻿using ConsoleAppSeaBattleServer.NetModel;
 using ConsoleAppSeaBattleServer.Gameplay;
 using ConsoleAppSeaBattleServer.NetProtocol;
 using ConsoleAppSeaBattleServer.Utils;

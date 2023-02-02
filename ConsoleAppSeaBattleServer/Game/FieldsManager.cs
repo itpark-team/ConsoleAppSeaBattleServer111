@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ConsoleAppSeaBattleServer.Game
+namespace ConsoleAppSeaBattleServer.NetModel
 {
     internal class FieldsManager
     {
@@ -24,7 +24,7 @@ namespace ConsoleAppSeaBattleServer.Game
             _myField = new Cell[Rows, Columns];
             _shootField = new Cell[Rows, Columns];
 
-            countAliveShips = 2;
+            countAliveShips = 10;
         }
 
         public void ClearFields()
@@ -96,8 +96,6 @@ namespace ConsoleAppSeaBattleServer.Game
             }
 
             return charField;
-
-           
         }
 
         public PlayerFields GetPlayerFields()
