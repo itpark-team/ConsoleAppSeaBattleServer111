@@ -24,7 +24,7 @@ namespace ConsoleAppSeaBattleServer.Game
             _myField = new Cell[Rows, Columns];
             _shootField = new Cell[Rows, Columns];
 
-            countAliveShips = 10;
+            countAliveShips = 2;
         }
 
         public void ClearFields()
